@@ -17,12 +17,42 @@ const libros=[
 ];
 
 const server = http.createServer((req, res) => {
+    const {method, url} = req;
 
-    res.writeHead(404, {'Content-Type': 'application/json'});
 
-    res.end(
-     JSON.stringify({data:null})   
-    );
+    let body = [];
+
+    req.on('data', (data) => { 
+        body.push(data);
+    })
+    .on('end', () => {
+        body=Buffer.concat(body).toString();    
+
+        let status = 404;
+        const response = {
+            status: 404,
+            data: null
+        }
+
+        if (method === 'GET' && url === '/libros') {
+            status = 200;
+            response.status = 200;
+            response.data = libros;    
+        }else if(method === 'POST' && url === '/libros'){
+            status = 200;
+            const {titulo, autor} = JSON.parse(body);
+            libros.push({titulo, autor});
+            response.status = 200;
+            response.data = libros;    
+        }
+
+        res.writeHead(status, {'Content-Type': 'application/json'});
+
+        res.end(
+            JSON.stringify({response})   
+           );        
+    });
+  
 });
 
 const PORT = 5000;
