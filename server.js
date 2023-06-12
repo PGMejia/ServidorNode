@@ -10,14 +10,17 @@ const libros=[
     {'titulo':'Danza de dragones', 'autor':'George R.R. Martin'},
     {'titulo':'Juego de tronos', 'autor':'George R.R. Martin'},
     {'titulo':'El nombre del viento', 'autor':'Patrick Rothfuss'},
-    {'titulo':'El temor de un hombre sabio', 'autor':'Patrick Rothfuss'}
+    {'titulo':'El temor de un hombre sabio', 'autor':'Patrick Rothfuss'},
+    {'titulo': 'Harry Potter y la piedra filosofal', 'autor':'J.K. Rowling'},
+
     
 ];
 
 const server = http.createServer((req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.write('<h1>Hello World</h1>');
-    res.end();
+    res.setHeader('Content-Type', 'application/json');
+    res.end(
+     JSON.stringify({data:libros})   
+    );
 });
 
 const PORT = 5000;
