@@ -17,9 +17,11 @@ const libros=[
 ];
 
 const server = http.createServer((req, res) => {
-    res.setHeader('Content-Type', 'application/json');
+
+    res.writeHead(404, {'Content-Type': 'application/json'});
+
     res.end(
-     JSON.stringify({data:libros})   
+     JSON.stringify({data:null})   
     );
 });
 
